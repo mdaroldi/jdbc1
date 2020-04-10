@@ -2,14 +2,14 @@
 Tutorial on how to access and use a Docker MySQL container from a Java program on Mac
 
 ----------------
-####Dependencies:
+#### Dependencies:
 * Java
 * Docker
 * Eclipse, or another IDE
 
 ----------------
 
-##Steps
+## Steps
 	
 * Download and install [MySQL Java Connector](https://dev.mysql.com/downloads/connector/j/5.1.html)
 * Create an User Library using the .jar file
@@ -59,7 +59,7 @@ It might return a table with two columns - Id and Name.
 >	4, Books
 
 ----------------
-##Problem solving for remotely access
+## Problem solving for remotely access
 If you got the same problem like this while connect to MySQL server from another host (It depends on which version of MySQL you are using):
 `java.sql.SQLNonTransientConnectionException: Public Key Retrieval is not allowed`
 You should change your password of root user by using the native password hashing method to fix it:
