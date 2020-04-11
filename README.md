@@ -17,11 +17,14 @@ Tutorial on how to access and use a Docker MySQL container from a Java program o
 `shell> docker pull mysql/mysql-server`
 
 * Start running a docker container from MySQL image:
+* 
 `shell> docker run --name=mysql1 --env MYSQL_ROOT_HOST=% -p 3306:3306 -d mysql/mysql-server`
 
 * Check the automatically generated password of root user, copy it
+
 `shell> docker logs mysql1 2>&1 | grep GENERATED` 
 * Connecting to the MySQL Server instance, and then paste the generated password:
+
 `shell> docker exec -it mysql1 mysql -u root -p` 
 
 The system will ask you to change to root password, use the following command to achieve it:
@@ -34,13 +37,21 @@ Obs.: This will change the generated password by 'password'. You may use any pas
 
 `mysql> CREATE DATABASE coursejdbc;`
 
+* Then, copy the database.sql file to the container in a fresh terminal:
+
+`$ docker cp /path/to/database.sql mysql1:/database.sql`
+
+This may put the file in the root directory. In the mysql client terminal, you may check if it worked typing:
+
+`mysql> system ls`
+
 * Select this database:
 
 `mysql> USE coursejdbc;`
 
-* Then, copy the content of the database.sql file, and paste it in the mysql terminal. I may appear messages like:
+* And finally, import the SQL commands from the file:
 
-`Query OK, 0 rows affected, 1 warning (0.05 sec)`
+`mysql> source database.sql`
 
 * You can check if everything is OK with this command:
 
@@ -61,6 +72,9 @@ It might return a table with two columns - Id and Name.
 ----------------
 ## Problem solving for remotely access
 If you got the same problem like this while connect to MySQL server from another host (It depends on which version of MySQL you are using):
+
 `java.sql.SQLNonTransientConnectionException: Public Key Retrieval is not allowed`
+
 You should change your password of root user by using the native password hashing method to fix it:
+
 `ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';`
